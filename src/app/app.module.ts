@@ -1,13 +1,14 @@
-import { TaskModule } from './task/task.module';
-import { NgModule } from '@angular/core';
+import { Apollo } from 'apollo-angular';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { InMemoryCache } from '@apollo/client/core';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { TaskModule } from './task/task.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,9 +16,8 @@ import { AppComponent } from './app.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    Apollo,
-    HttpLink,
-    TaskModule
+    TaskModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent],

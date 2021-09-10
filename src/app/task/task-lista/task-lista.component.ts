@@ -3,14 +3,14 @@ import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Task, Query } from '../types';
+import { Task, Query } from '../../types';
 
 @Component({
-  selector: 'app-task',
-  templateUrl: './task.component.html',
-  styleUrls: ['./task.component.css'],
+  selector: 'app-task-lista',
+  templateUrl: './task-lista.component.html',
+  styleUrls: ['./task-lista.component.css'],
 })
-export class TaskComponent implements OnInit {
+export class TaskListaComponent implements OnInit {
   tasks!: Observable<Task[]>;
 
   constructor(private apollo: Apollo) {}
