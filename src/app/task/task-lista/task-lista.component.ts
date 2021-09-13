@@ -3,7 +3,7 @@ import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { User, Query } from '../../types';
+import { Task, QueryTasks } from '../../types';
 
 @Component({
   selector: 'app-task-lista',
@@ -11,25 +11,23 @@ import { User, Query } from '../../types';
   styleUrls: ['./task-lista.component.css'],
 })
 export class TaskListaComponent implements OnInit {
-  users!: Observable<User[]>;
+  tasks!: Observable<Task[]>;
 
   constructor(private apollo: Apollo) {}
 
   ngOnInit(): void {
-    this.users = this.apollo
-      .watchQuery<Query>({
+    this.tasks = this.apollo
+      .watchQuery<QueryTasks>({
         query: gql`
           query Query {
-            users {
+            tasks {
               id
               name
-              email
+              description
             }
           }
         `,
       })
-      .valueChanges.pipe(map((result) => result.data.users));
-
-    console.log(`users here: ${this.users}`);
+      .valueChanges.pipe(map((result) => result.data.tasks));
   }
 }

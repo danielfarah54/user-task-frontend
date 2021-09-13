@@ -14,10 +14,14 @@ export type Task = {
   user: User;
 };
 
-// export type Query = {
-//   tasks: Task[];
-// };
+export type QueryTasks = {
+  tasks: Task[];
+};
 
-export type Query = {
+export type QueryUsers = {
   users: User[];
+};
+
+export type QueryEmails = {
+  emails: User[];
 };

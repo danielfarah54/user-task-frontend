@@ -3,7 +3,7 @@ import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { User, Query } from '../../types';
+import { User, QueryUsers } from '../../types';
 
 @Component({
   selector: 'app-user-lista',
@@ -17,7 +17,7 @@ export class UserListaComponent implements OnInit {
 
   ngOnInit(): void {
     this.users = this.apollo
-      .watchQuery<Query>({
+      .watchQuery<QueryUsers>({
         query: gql`
           query Query {
             users {
@@ -29,7 +29,5 @@ export class UserListaComponent implements OnInit {
         `,
       })
       .valueChanges.pipe(map((result) => result.data.users));
-
-    console.log(`users here: ${this.users}`);
   }
 }
