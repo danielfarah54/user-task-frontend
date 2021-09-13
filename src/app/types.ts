@@ -3,7 +3,7 @@ export type User = {
   name: string;
   email: string;
   password: string;
-}
+};
 
 export type Task = {
   id: number;
@@ -12,8 +12,12 @@ export type Task = {
   description: string;
   completed: boolean;
   user: User;
-}
+};
+
+// export type Query = {
+//   tasks: Task[];
+// };
 
 export type Query = {
-  allTasks: Task[];
-}
+  users: User[];
+};

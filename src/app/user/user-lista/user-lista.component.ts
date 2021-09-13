@@ -6,11 +6,11 @@ import { map } from 'rxjs/operators';
 import { User, Query } from '../../types';
 
 @Component({
-  selector: 'app-task-lista',
-  templateUrl: './task-lista.component.html',
-  styleUrls: ['./task-lista.component.css'],
+  selector: 'app-user-lista',
+  templateUrl: './user-lista.component.html',
+  styleUrls: ['./user-lista.component.css'],
 })
-export class TaskListaComponent implements OnInit {
+export class UserListaComponent implements OnInit {
   users!: Observable<User[]>;
 
   constructor(private apollo: Apollo) {}
