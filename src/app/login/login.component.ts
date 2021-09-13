@@ -76,8 +76,8 @@ export class LoginComponent implements OnInit {
           console.error(`DEU RUIM: ${err}`);
           return EMPTY;
         }),
-        // tap((token) => console.log(`jwt: ${token}`)),
-        map((token) => (this.jwt = token!))
+        tap((token) => console.log(`jwt: ${token}`)),
+        map((token) => (this.jwt = token!)),
       )
       .subscribe();
   }
