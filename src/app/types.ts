@@ -25,3 +25,9 @@ export type QueryUsers = {
 export type QueryEmails = {
   emails: User[];
 };
+
+export type MutationLogin = {
+  login: {
+    accessToken: string;
+  };
+};

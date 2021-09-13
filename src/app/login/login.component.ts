@@ -1,6 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { Apollo, gql } from 'apollo-angular';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { catchError, map, tap } from 'rxjs/operators';
+
+import { MutationLogin } from './../types';
+import { EMPTY, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +14,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   formulario!: FormGroup;
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {}
+  jwt!: string;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private apollo: Apollo
+  ) {}
 
   ngOnInit(): void {
     this.formulario = this.formBuilder.group({
@@ -18,5 +29,60 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit() {}
+  onSubmit() {
+    if (this.formulario.valid) {
+      this.submit();
+    } else {
+      this.verificaValidacoesForm(this.formulario);
+    }
+  }
+
+  verificaValidacoesForm(formGroup: FormGroup | FormArray) {
+    Object.keys(formGroup.controls).forEach((campo) => {
+      const controle = formGroup.get(campo);
+      controle?.markAsDirty();
+      controle?.markAsTouched();
+      if (controle instanceof FormGroup || controle instanceof FormArray) {
+        this.verificaValidacoesForm(controle);
+      }
+    });
+  }
+
+  submit() {
+    const valueSubmit = Object.assign({}, this.formulario.value);
+    const { email, password } = valueSubmit;
+
+    // console.log(`values: ${JSON.stringify(valueSubmit)}`);
+
+    const mutationString = gql`
+      mutation Mutation($email: String!, $password: String!) {
+        login(email: $email, password: $password) {
+          accessToken
+        }
+      }
+    `;
+
+    this.apollo
+      .mutate<MutationLogin>({
+        mutation: mutationString,
+        variables: {
+          email,
+          password,
+        },
+      })
+      .pipe(
+        map((result) => result.data?.login.accessToken),
+        catchError((err) => {
+          console.error(`DEU RUIM: ${err}`);
+          return EMPTY;
+        }),
+        // tap((token) => console.log(`jwt: ${token}`)),
+        map((token) => (this.jwt = token!))
+      )
+      .subscribe();
+  }
+
+  resetar() {
+    this.formulario.reset();
+  }
 }
