@@ -29,5 +29,6 @@ export type QueryEmails = {
 export type MutationLogin = {
   login: {
     accessToken: string;
+    expiresIn: string;
   };
 };
