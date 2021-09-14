@@ -8,7 +8,7 @@ import { Task, QueryTasks } from '../../types';
 @Component({
   selector: 'app-task-lista',
   templateUrl: './task-lista.component.html',
-  styleUrls: ['./task-lista.component.css'],
+  styleUrls: ['./task-lista.component.scss'],
 })
 export class TaskListaComponent implements OnInit {
   tasks!: Observable<Task[]>;

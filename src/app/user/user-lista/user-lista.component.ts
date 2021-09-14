@@ -8,7 +8,7 @@ import { User, QueryUsers } from '../../types';
 @Component({
   selector: 'app-user-lista',
   templateUrl: './user-lista.component.html',
-  styleUrls: ['./user-lista.component.css'],
+  styleUrls: ['./user-lista.component.scss'],
 })
 export class UserListaComponent implements OnInit {
   users!: Observable<User[]>;
