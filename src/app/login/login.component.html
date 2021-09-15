@@ -19,8 +19,12 @@
       />
     </div>
     <div class="btn-container">
-      <button type="submit" id="new-account" class="btn btn-light">New Account</button>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="button" id="new-account" class="btn btn-light" (click)="createAccount()">
+        New Account
+      </button>
+      <button type="submit" class="btn btn-primary">
+        Submit
+      </button>
     </div>
   </div>
 </form>

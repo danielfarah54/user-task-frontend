@@ -836,9 +836,9 @@ $font-family-sans-serif:      Arial, Helvetica, sans-serif;
 // $form-label-color:                      null !default;
 // // scss-docs-end form-label-variables
 
-// // scss-docs-start form-input-variables
-// $input-padding-y:                       $input-btn-padding-y !default;
-// $input-padding-x:                       $input-btn-padding-x !default;
+// scss-docs-start form-input-variables
+$input-padding-y:                       13px;
+$input-padding-x:                       15px;
 // $input-font-family:                     $input-btn-font-family !default;
 // $input-font-size:                       $input-btn-font-size !default;
 // $input-font-weight:                     $font-weight-base !default;
@@ -1082,7 +1082,7 @@ $font-family-sans-serif:      Arial, Helvetica, sans-serif;
 // // scss-docs-start nav-variables
 // $nav-link-padding-y:                .5rem !default;
 // $nav-link-padding-x:                1rem !default;
-// $nav-link-font-size:                null !default;
+$nav-link-font-size:                20px;
 // $nav-link-font-weight:              null !default;
 // $nav-link-color:                    $link-color !default;
 // $nav-link-hover-color:              $link-hover-color !default;

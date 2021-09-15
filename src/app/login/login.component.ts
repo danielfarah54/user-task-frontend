@@ -33,6 +33,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  createAccount() {
+    console.log('create');
+  }
+
   onSubmit() {
     if (this.formulario.valid) {
       this.submit();
