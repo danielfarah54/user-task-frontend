@@ -32,3 +32,7 @@ export type MutationLogin = {
     expiresIn: string;
   };
 };
+
+export type MutationRegisterUser = {
+  registerUser: boolean;
+}
