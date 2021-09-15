@@ -1,13 +1,26 @@
-<form class="container" [formGroup]='formulario' (ngSubmit)='onSubmit()'>
+<form class="container" [formGroup]="formulario" (ngSubmit)="onSubmit()">
   <div class="sub-container">
     <div class="mb-3">
       <label for="email" class="form-label">Email address</label>
-      <input type="email" class="form-control" id="email" formControlName="email">
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        formControlName="email"
+      />
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
-      <input type="password" class="form-control" id="password" formControlName="password">
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        formControlName="password"
+      />
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div class="btn-container">
+      <button type="submit" id="new-account" class="btn btn-light">New Account</button>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
   </div>
 </form>
