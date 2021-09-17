@@ -1,4 +1,4 @@
-import { SetHeadersService } from './../../auth/set-headers.service';
+import { HeadersService } from '../../auth/headers.service';
 import { Component, OnInit } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
@@ -16,11 +16,11 @@ export class TaskListaComponent implements OnInit {
 
   constructor(
     private apollo: Apollo,
-    private setHeadersService: SetHeadersService
+    private headersService: HeadersService
   ) {}
 
   ngOnInit(): void {
-    const httpOptions =this.setHeadersService.setHeaders();
+    // const httpOptions =this.headersService.setHeaders();
 
     this.tasks = this.apollo
       .watchQuery<QueryTasks>({

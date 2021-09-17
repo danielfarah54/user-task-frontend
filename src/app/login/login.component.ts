@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -17,10 +18,15 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+    if (this.isLoggedIn()) {
+      this.router.navigate(['tasks']);
+    }
+
     this.formulario = this.formBuilder.group({
       email: [null, [Validators.required, Validators.email]],
       password: [null, Validators.required],
@@ -56,11 +62,6 @@ export class LoginComponent implements OnInit {
 
     // console.log(`values: ${JSON.stringify(valueSubmit)}`);
     this.authService.login(email, password);
-  }
-
-  logout() {
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('expires_at');
   }
 
   public isLoggedIn() {

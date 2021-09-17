@@ -1,11 +1,13 @@
+import { Router } from '@angular/router';
+import { HeadersService } from './headers.service';
 import { Apollo, gql } from 'apollo-angular';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import * as moment from 'moment';
-
-import { MutationLogin } from './../types';
 import { catchError, map, tap } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
+
+import { MutationLogin } from './../types';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +18,14 @@ export class AuthService {
     expiresIn: string;
   };
 
-  constructor(private http: HttpClient, private apollo: Apollo) {}
+  mostrarMenuEmitter = new EventEmitter<boolean>();
+
+  constructor(
+    private http: HttpClient,
+    private apollo: Apollo,
+    private headersService: HeadersService,
+    private router: Router
+  ) {}
 
   login(email: string, password: string) {
     const mutationString = gql`
@@ -40,27 +49,36 @@ export class AuthService {
         map((result) => result.data?.login),
         catchError((err) => {
           console.error(`DEU RUIM: ${err}`);
+          this.mostrarMenuEmitter.emit(false);
           return EMPTY;
         }),
         tap((token) => console.log(`jwt: ${JSON.stringify(token)}`)),
         map((token) => (this.jwt = token!)),
-        // tap(res => console.log(res)),
         map(({ accessToken, expiresIn }) =>
           this.setSession({ accessToken, expiresIn })
-        )
+        ),
+        map((_) => {
+          this.mostrarMenuEmitter.emit(true);
+          this.router.navigate(['tasks']);
+        })
       )
       .subscribe();
   }
 
-  private setSession(authResult: { accessToken: string; expiresIn: string }) {
-    const expiresAt = moment().add(authResult.expiresIn, 'second');
+  private setSession(tokenResult: { accessToken: string; expiresIn: string }) {
+    const expiresAt = JSON.stringify(
+      moment().add(tokenResult.expiresIn, 'second').valueOf()
+    );
 
-    localStorage.setItem('id_token', authResult.accessToken);
-    localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
+    this.headersService.setHeaders(tokenResult.accessToken, expiresAt);
   }
 
   isLoggedIn() {
     return moment().isBefore(this.getExpiration());
+  }
+
+  isLoggedOut() {
+    return moment().isAfter(this.getExpiration());
   }
 
   getExpiration() {
@@ -72,5 +90,11 @@ export class AuthService {
     }
     const expiresAt = JSON.parse(expiration!);
     return moment(expiresAt);
+  }
+
+  logout() {
+    moment().add('0', 'millisecond').valueOf();
+    this.headersService.revokeHeaders();
+    this.apollo.client.resetStore();
   }
 }
