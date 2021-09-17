@@ -1,8 +1,6 @@
-import { Apollo } from 'apollo-angular';
+import { GraphqlService } from './graphql/graphql.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpLink } from 'apollo-angular/http';
-import { InMemoryCache } from '@apollo/client/core';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -19,16 +17,13 @@ import { TaskModule } from './task/task.module';
     HttpClientModule,
     TaskModule,
     RouterModule,
-    LoginModule
+    LoginModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(apollo: Apollo, httpLink: HttpLink) {
-    apollo.create({
-      link: httpLink.create({ uri: 'http://localhost:4000/graphql' }),
-      cache: new InMemoryCache(),
-    });
+  constructor(graphqlService: GraphqlService) {
+    graphqlService.createApollo();
   }
 }
