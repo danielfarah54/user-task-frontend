@@ -1,33 +1,30 @@
-import {
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-} from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+// import { SetHeadersService } from './set-headers.service';
+// import {
+//   HttpEvent,
+//   HttpHandler,
+//   HttpInterceptor,
+//   HttpRequest,
+// } from '@angular/common/http';
+// import { Injectable } from '@angular/core';
+// import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AuthInterceptorService implements HttpInterceptor {
-  constructor() {}
+// @Injectable({
+//   providedIn: 'root',
+// })
+// export class AuthInterceptorService implements HttpInterceptor {
+//   constructor(private setHeadersService: SetHeadersService) {}
 
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    const idToken = localStorage.getItem('id_token');
-    console.log(idToken);
-
-    if (idToken) {
-      const cloned = req.clone({
-        headers: req.headers.set('authorization', `bearer ${idToken}`),
-      });
-
-      return next.handle(cloned);
-    } else {
-      return next.handle(req);
-    }
-  }
-}
+//   intercept(
+//     req: HttpRequest<any>,
+//     next: HttpHandler
+//   ): Observable<HttpEvent<any>> {
+//     try {
+//       const cloned = req.clone({
+//         headers: this.setHeadersService.setHeaders(),
+//       });
+//       return next.handle(cloned);
+//     } catch (error) {
+//       return next.handle(req);
+//     }
+//   }
+// }
