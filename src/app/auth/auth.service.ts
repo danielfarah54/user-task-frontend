@@ -18,6 +18,8 @@ export class AuthService {
     expiresIn: string;
   };
 
+  usuarioAutenticado = false;
+
   mostrarMenuEmitter = new EventEmitter<boolean>();
 
   constructor(
@@ -49,6 +51,7 @@ export class AuthService {
         map((result) => result.data?.login),
         catchError((err) => {
           console.error(`DEU RUIM: ${err}`);
+          this.usuarioAutenticado = false;
           this.mostrarMenuEmitter.emit(false);
           return EMPTY;
         }),
@@ -58,6 +61,7 @@ export class AuthService {
           this.setSession({ accessToken, expiresIn })
         ),
         map((_) => {
+          this.usuarioAutenticado = true;
           this.mostrarMenuEmitter.emit(true);
           this.router.navigate(['tasks']);
         })
@@ -96,5 +100,9 @@ export class AuthService {
     moment().add('0', 'millisecond').valueOf();
     this.headersService.revokeHeaders();
     this.apollo.client.resetStore();
+  }
+
+  usuarioEstaAutenticado() {
+    return this.usuarioAutenticado;
   }
 }

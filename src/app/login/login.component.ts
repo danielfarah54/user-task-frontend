@@ -23,10 +23,6 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.isLoggedIn()) {
-      this.router.navigate(['tasks']);
-    }
-
     this.formulario = this.formBuilder.group({
       email: [null, [Validators.required, Validators.email]],
       password: [null, Validators.required],
