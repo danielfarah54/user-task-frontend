@@ -8,6 +8,11 @@ import { LogoutComponent } from './logout/logout.component';
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   {
+    path: 'home',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
+  },
+  {
     path: 'tasks',
     canActivate: [AuthGuard],
     loadChildren: () => import('./task/task.module').then((m) => m.TaskModule),
