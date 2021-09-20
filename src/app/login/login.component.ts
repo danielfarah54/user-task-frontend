@@ -19,7 +19,6 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -56,7 +55,6 @@ export class LoginComponent implements OnInit {
     const valueSubmit = Object.assign({}, this.formulario.value);
     const { email, password } = valueSubmit;
 
-    // console.log(`values: ${JSON.stringify(valueSubmit)}`);
     this.authService.login(email, password);
   }
 

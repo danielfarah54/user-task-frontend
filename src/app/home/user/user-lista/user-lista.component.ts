@@ -3,7 +3,7 @@ import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { User, QueryUsers } from '../../types';
+import { User, QueryUsers } from '../../../types';
 
 @Component({
   selector: 'app-user-lista',

@@ -1,12 +1,30 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
+import { HeaderComponent } from './header/header.component';
+import { HomeComponent } from './home.component';
+import { HomeRoutingModule } from './home-routing.module';
+import { LogoutComponent } from './logout/logout.component';
+import { TaskModule } from './task/task.module';
+import { UserModule } from './user/user.module';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    HeaderComponent,
+    HomeComponent,
+    LogoutComponent
+  ],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    HomeRoutingModule,
+    HttpClientModule,
+    RouterModule,
+    TaskModule,
+    UserModule
+  ],
+  bootstrap: [HomeComponent],
 })
 export class HomeModule { }

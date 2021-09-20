@@ -3,7 +3,7 @@ import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Task, QueryTasks } from '../../types';
+import { Task, QueryTasks } from '../../../types';
 
 @Component({
   selector: 'app-task-lista',

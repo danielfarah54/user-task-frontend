@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError, tap } from 'rxjs/operators';
 
-import { MutationRegisterUser } from './../../types';
+import { MutationRegisterUser } from '../../../types';
 
 @Component({
   selector: 'app-user-create',

@@ -1,8 +1,7 @@
 import { Router } from '@angular/router';
 import { HeadersService } from './headers.service';
 import { Apollo, gql } from 'apollo-angular';
-import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { catchError, map, tap } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
@@ -20,10 +19,7 @@ export class AuthService {
 
   usuarioAutenticado = false;
 
-  mostrarMenuEmitter = new EventEmitter<boolean>();
-
   constructor(
-    private http: HttpClient,
     private apollo: Apollo,
     private headersService: HeadersService,
     private router: Router
@@ -52,7 +48,6 @@ export class AuthService {
         catchError((err) => {
           console.error(`DEU RUIM: ${err}`);
           this.usuarioAutenticado = false;
-          this.mostrarMenuEmitter.emit(false);
           return EMPTY;
         }),
         tap((token) => console.log(`jwt: ${JSON.stringify(token)}`)),
@@ -62,8 +57,7 @@ export class AuthService {
         ),
         map((_) => {
           this.usuarioAutenticado = true;
-          this.mostrarMenuEmitter.emit(true);
-          this.router.navigate(['tasks']);
+          this.router.navigate(['home']);
         })
       )
       .subscribe();
