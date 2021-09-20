@@ -1,10 +1,18 @@
+<a routerLink="create">
+  <button class="btn btn-primary">New Task</button>
+</a>
+
 <div *ngFor="let task of tasks | async">
   <div class="card" style="width: 18rem">
     <div class="card-body">
-      <h5 class="card-title">Name: {{task.name}}</h5>
-      <h6 class="card-subtitle mb-2 text-muted"> Description: {{task.description}}</h6>
-      <p class="card-text">Task ID: {{task.id}}</p>
-      <p class="card-text">User ID: {{task.userId}}</p>
+      <h5 class="card-title">Name: {{ task.name }}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">
+        Description: {{ task.description }}
+      </h6>
+      <p class="card-text">Task ID: {{ task.id }}</p>
+      <p class="card-text">User ID: {{ task.userId }}</p>
     </div>
   </div>
 </div>
+
+<router-outlet></router-outlet>

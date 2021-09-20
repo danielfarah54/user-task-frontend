@@ -35,4 +35,8 @@ export type MutationLogin = {
 
 export type MutationRegisterUser = {
   registerUser: boolean;
-}
+};
+
+export type MutationCreateTask = {
+  registerTask: boolean;
+};

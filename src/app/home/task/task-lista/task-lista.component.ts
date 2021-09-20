@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
-import { Task, QueryTasks } from '../../../types';
+import { Task } from '../../../types';
+import { TaskService } from './../task.service';
 
 @Component({
   selector: 'app-task-lista',
@@ -13,22 +12,9 @@ import { Task, QueryTasks } from '../../../types';
 export class TaskListaComponent implements OnInit {
   tasks!: Observable<Task[]>;
 
-  constructor(private apollo: Apollo) {}
+  constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
-    this.tasks = this.apollo
-      .watchQuery<QueryTasks>({
-        query: gql`
-          query Query {
-            tasks {
-              id
-              name
-              description
-              userId
-            }
-          }
-        `,
-      })
-      .valueChanges.pipe(map((result) => result.data.tasks));
+    this.tasks = this.taskService.refreshList();
   }
 }

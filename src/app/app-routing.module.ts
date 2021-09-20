@@ -5,6 +5,8 @@ import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './home/logout/logout.component';
+import { TaskCreateComponent } from './home/task/task-create/task-create.component';
+import { TaskListaComponent } from './home/task/task-lista/task-lista.component';
 import { UserCreateComponent } from './home/user/user-create/user-create.component';
 import { UserListaComponent } from './home/user/user-lista/user-lista.component';
 
@@ -38,7 +40,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
