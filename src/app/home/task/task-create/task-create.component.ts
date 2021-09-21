@@ -1,5 +1,4 @@
 import { TaskService } from './../task.service';
-import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
@@ -19,7 +18,6 @@ export class TaskCreateComponent implements OnInit {
   constructor(
     private apollo: Apollo,
     private formBuilder: FormBuilder,
-    private router: Router,
     private taskService: TaskService
   ) {}
 
@@ -76,9 +74,7 @@ export class TaskCreateComponent implements OnInit {
           return EMPTY;
         }),
         tap((registerTask) => console.log(`registerTask: ${registerTask}`)),
-        map(() => {
-          this.router.navigate(['/home/tasks']);
-        })
+        map(() => this.taskService.listEmitter.emit(true)),
       )
       .subscribe();
   }

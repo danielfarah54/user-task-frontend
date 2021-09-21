@@ -8,6 +8,8 @@ import { QueryTasks } from './../../types';
   providedIn: 'root',
 })
 export class TaskService {
+  listEmitter = new EventEmitter<boolean>();
+
   constructor(private apollo: Apollo) {}
 
   refreshList() {
