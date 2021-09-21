@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { TaskCreateComponent } from './task-create/task-create.component';
 import { TaskListaComponent } from './task-lista/task-lista.component';
-import { TaskListResolver } from './../../guards/task-list.resolver';
+import { TaskUpdateComponent } from './task-update/task-update.component';
 
 const routes: Routes = [
   {
@@ -11,6 +11,7 @@ const routes: Routes = [
     component: TaskListaComponent,
   },
   { path: 'create', component: TaskCreateComponent },
+  { path: 'edit/:id', component: TaskUpdateComponent },
 ];
 
 @NgModule({

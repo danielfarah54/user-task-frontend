@@ -1,10 +1,10 @@
 import { Apollo, gql } from 'apollo-angular';
 import { Component, OnInit } from '@angular/core';
 import { EMPTY } from 'rxjs';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { map, catchError, tap } from 'rxjs/operators';
 
+import { FormService } from './../../../auth/form.service';
 import { MutationRegisterUser } from '../../../types';
 
 @Component({
@@ -17,7 +17,7 @@ export class UserCreateComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpClient,
+    private formService: FormService,
     private apollo: Apollo
   ) {}
 
@@ -33,19 +33,8 @@ export class UserCreateComponent implements OnInit {
     if (this.formulario.valid) {
       this.submit();
     } else {
-      this.verificaValidacoesForm(this.formulario);
+      this.formService.verificaValidacoesForm(this.formulario);
     }
-  }
-
-  verificaValidacoesForm(formGroup: FormGroup | FormArray) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsDirty();
-      controle?.markAsTouched();
-      if (controle instanceof FormGroup || controle instanceof FormArray) {
-        this.verificaValidacoesForm(controle);
-      }
-    });
   }
 
   submit() {

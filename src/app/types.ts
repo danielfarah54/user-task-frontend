@@ -40,3 +40,7 @@ export type MutationRegisterUser = {
 export type MutationCreateTask = {
   registerTask: boolean;
 };
+
+export type MutationUpdateTask = {
+  updateTask: boolean;
+};

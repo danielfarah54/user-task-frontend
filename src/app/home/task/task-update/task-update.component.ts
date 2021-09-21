@@ -1,26 +1,28 @@
-import { Apollo, gql } from 'apollo-angular';
+import { ActivatedRoute } from '@angular/router';
+import { gql, Apollo } from 'apollo-angular';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { EMPTY } from 'rxjs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { FormService } from './../../../auth/form.service';
-import { MutationCreateTask } from './../../../types';
+import { MutationUpdateTask } from './../../../types';
 import { TaskService } from './../task.service';
 
 @Component({
-  selector: 'app-task-create',
-  templateUrl: './task-create.component.html',
-  styleUrls: ['./task-create.component.scss'],
+  selector: 'app-task-update',
+  templateUrl: './task-update.component.html',
+  styleUrls: ['./task-update.component.scss'],
 })
-export class TaskCreateComponent implements OnInit {
+export class TaskUpdateComponent implements OnInit {
   formulario!: FormGroup;
 
   constructor(
     private apollo: Apollo,
     private formBuilder: FormBuilder,
+    private formService: FormService,
     private taskService: TaskService,
-    private formService: FormService
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -43,27 +45,34 @@ export class TaskCreateComponent implements OnInit {
     const { name, description } = valueSubmit;
 
     const mutationString = gql`
-      mutation Mutation($name: String!, $description: String!) {
-        registerTask(name: $name, description: $description)
+      mutation Mutation($name: String!, $description: String!, $id: Float!) {
+        updateTask(name: $name, description: $description, id: $id)
       }
     `;
 
+    let id = 0;
+
+    this.route.params.pipe(map((value) => (id = value.id))).subscribe();
+    // console.log('id', id);
+    // console.log('name', name);
+    // console.log('description', description);
+
     this.apollo
-      .mutate<MutationCreateTask>({
+      .mutate<MutationUpdateTask>({
         mutation: mutationString,
+        errorPolicy: 'all',
         variables: {
           name,
           description,
+          id,
         },
       })
       .pipe(
-        map((result) => result.data?.registerTask),
-        // tap((c) => console.log('resultao:', c)),
+        map((result) => result.data?.updateTask),
         catchError((err) => {
           console.error(`DEU RUIM: ${err}`);
           return EMPTY;
         }),
-        // tap((registerTask) => console.log(`registerTask: ${registerTask}`)),
         map(() => this.taskService.listEmitter.emit(true))
       )
       .subscribe();
