@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Apollo, gql } from 'apollo-angular';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { map, take, switchMap } from 'rxjs/operators';
+import { Observable, EMPTY } from 'rxjs';
 
-import { Task } from '../../../types';
+import { ModalService } from './../../../shared/modal.service';
+import { MutationDeleteTask, Task } from '../../../types';
 import { TaskService } from './../task.service';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-task-lista',
@@ -13,8 +15,15 @@ import { map } from 'rxjs/operators';
 })
 export class TaskListaComponent implements OnInit {
   tasks!: Observable<Task[]>;
+  modalRef?: BsModalRef;
 
-  constructor(private taskService: TaskService, private router: Router) {}
+  @ViewChild('deleteModal') deleteModal: any;
+
+  constructor(
+    private taskService: TaskService,
+    private modalService: ModalService,
+    private apollo: Apollo
+  ) {}
 
   ngOnInit(): void {
     this.tasks = this.taskService.refreshList();
@@ -26,5 +35,39 @@ export class TaskListaComponent implements OnInit {
         map(() => window.location.replace('home/tasks'))
       )
       .subscribe();
+  }
+
+  onDelete(id: number) {
+    const mutationString = gql`
+      mutation Mutation($id: Float!) {
+        deleteTask(id: $id)
+      }
+    `;
+    const title = 'Confirmação';
+    const body = 'Tem certeza que deseja excluir a tarefa?';
+    const result$ = this.modalService.showConfirm(title, body);
+    result$
+      .asObservable()
+      .pipe(
+        take(1),
+        switchMap(async (result) =>
+          result
+            ? this.apollo.mutate<MutationDeleteTask>({
+                mutation: mutationString,
+                variables: {
+                  id,
+                },
+              })
+            : EMPTY
+        )
+      )
+      .subscribe(
+        (success) => {
+          this.taskService.refreshList();
+        },
+        (error) => {
+          throw new Error('DEU RUIM!!');
+        }
+      );
   }
 }
