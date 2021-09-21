@@ -57,7 +57,7 @@ export class AuthService {
         ),
         map((_) => {
           this.usuarioAutenticado = true;
-          this.router.navigate(['home']);
+          this.router.navigate(['home/tasks']);
         })
       )
       .subscribe();
