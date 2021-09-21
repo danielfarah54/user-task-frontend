@@ -17,8 +17,6 @@ export class AuthService {
     expiresIn: string;
   };
 
-  usuarioAutenticado = false;
-
   constructor(
     private apollo: Apollo,
     private headersService: HeadersService,
@@ -47,7 +45,6 @@ export class AuthService {
         map((result) => result.data?.login),
         catchError((err) => {
           console.error(`DEU RUIM: ${err}`);
-          this.usuarioAutenticado = false;
           return EMPTY;
         }),
         tap((token) => console.log(`jwt: ${JSON.stringify(token)}`)),
@@ -56,7 +53,6 @@ export class AuthService {
           this.setSession({ accessToken, expiresIn })
         ),
         map((_) => {
-          this.usuarioAutenticado = true;
           this.router.navigate(['home/tasks']);
         })
       )
@@ -94,9 +90,5 @@ export class AuthService {
     moment().add('0', 'millisecond').valueOf();
     this.headersService.revokeHeaders();
     this.apollo.client.resetStore();
-  }
-
-  usuarioEstaAutenticado() {
-    return this.usuarioAutenticado;
   }
 }
