@@ -1,8 +1,9 @@
+import { FormsService } from './../../../shared/forms.service';
 import { TaskService } from './../task.service';
 import { Apollo, gql } from 'apollo-angular';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { MutationCreateTask } from './../../../types';
 import { EMPTY } from 'rxjs';
@@ -18,7 +19,8 @@ export class TaskCreateComponent implements OnInit {
   constructor(
     private apollo: Apollo,
     private formBuilder: FormBuilder,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private formsService: FormsService
   ) {}
 
   ngOnInit(): void {
@@ -32,19 +34,8 @@ export class TaskCreateComponent implements OnInit {
     if (this.formulario.valid) {
       this.submit();
     } else {
-      this.verificaValidacoesForm(this.formulario);
+      this.formsService.verificaValidacoesForm(this.formulario);
     }
-  }
-
-  verificaValidacoesForm(formGroup: FormGroup | FormArray) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsDirty();
-      controle?.markAsTouched();
-      if (controle instanceof FormGroup || controle instanceof FormArray) {
-        this.verificaValidacoesForm(controle);
-      }
-    });
   }
 
   submit() {
@@ -74,7 +65,7 @@ export class TaskCreateComponent implements OnInit {
           return EMPTY;
         }),
         tap((registerTask) => console.log(`registerTask: ${registerTask}`)),
-        map(() => this.taskService.listEmitter.emit(true)),
+        map(() => this.taskService.listEmitter.emit(true))
       )
       .subscribe();
   }
