@@ -2,10 +2,13 @@ import { Apollo, gql } from 'apollo-angular';
 import { catchError, map, tap } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { EventEmitter, Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { AuthService } from '../auth/auth.service';
-import { MutationCreateTask, MutationDeleteTask, QueryTasks } from '../types';
+import {
+  MutationCreateTask,
+  MutationDeleteTask,
+  MutationUpdateTask,
+  QueryTasks,
+} from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -13,11 +16,7 @@ import { MutationCreateTask, MutationDeleteTask, QueryTasks } from '../types';
 export class TaskRepositoryService {
   listEmitter = new EventEmitter<boolean>();
 
-  constructor(
-    private apollo: Apollo,
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  constructor(private apollo: Apollo) {}
 
   createTask(name: string, description: string) {
     const mutationString = gql`
@@ -61,6 +60,34 @@ export class TaskRepositoryService {
         `,
       })
       .valueChanges.pipe(map((result) => result.data.tasks));
+  }
+
+  updateTask(id: string, name: string, description: string) {
+    const mutationString = gql`
+      mutation Mutation($name: String!, $description: String!, $id: Float!) {
+        updateTask(name: $name, description: $description, id: $id)
+      }
+    `;
+    // console.log(`id: ${typeof id}, name: ${name}, description: ${description}`);
+
+    this.apollo
+      .mutate<MutationUpdateTask>({
+        mutation: mutationString,
+        variables: {
+          name,
+          description,
+          id: parseFloat(id),
+        },
+      })
+      .pipe(
+        map((result) => result.data?.updateTask),
+        catchError((err) => {
+          console.error(`DEU RUIM: ${err}`);
+          return EMPTY;
+        }),
+        map(() => this.listEmitter.emit(true))
+      )
+      .subscribe();
   }
 
   deleteTask(id: number) {

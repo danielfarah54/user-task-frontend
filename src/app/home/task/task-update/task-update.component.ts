@@ -1,12 +1,10 @@
-import { ActivatedRoute } from '@angular/router';
-import { gql, Apollo } from 'apollo-angular';
-import { catchError, map, tap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import { EMPTY } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
 
-import { FormService } from './../../../auth/form.service';
-import { MutationUpdateTask } from './../../../types';
+import { TaskRepositoryService } from './../../../shared/task-repository.service';
+import { FormsService } from './../../../shared/forms.service';
 
 @Component({
   selector: 'app-task-update',
@@ -17,9 +15,9 @@ export class TaskUpdateComponent implements OnInit {
   formulario!: FormGroup;
 
   constructor(
-    private apollo: Apollo,
     private formBuilder: FormBuilder,
-    private formService: FormService,
+    private formsService: FormsService,
+    private repositoryService: TaskRepositoryService,
     private route: ActivatedRoute
   ) {}
 
@@ -34,7 +32,7 @@ export class TaskUpdateComponent implements OnInit {
     if (this.formulario.valid) {
       this.submit();
     } else {
-      this.formService.verificaValidacoesForm(this.formulario);
+      this.formsService.verificaValidacoesForm(this.formulario);
     }
   }
 
@@ -42,36 +40,11 @@ export class TaskUpdateComponent implements OnInit {
     const valueSubmit = Object.assign({}, this.formulario.value);
     const { name, description } = valueSubmit;
 
-    const mutationString = gql`
-      mutation Mutation($name: String!, $description: String!, $id: Float!) {
-        updateTask(name: $name, description: $description, id: $id)
-      }
-    `;
-
-    let id = 0;
-
-    this.route.params.pipe(map((value) => (id = value.id))).subscribe();
-    // console.log('id', id);
-    // console.log('name', name);
-    // console.log('description', description);
-
-    this.apollo
-      .mutate<MutationUpdateTask>({
-        mutation: mutationString,
-        errorPolicy: 'all',
-        variables: {
-          name,
-          description,
-          id,
-        },
-      })
+    this.route.params
       .pipe(
-        map((result) => result.data?.updateTask),
-        catchError((err) => {
-          console.error(`DEU RUIM: ${err}`);
-          return EMPTY;
-        }),
-        map(() => this.taskService.listEmitter.emit(true))
+        map((value) =>
+          this.repositoryService.updateTask(value.id, name, description)
+        )
       )
       .subscribe();
   }
