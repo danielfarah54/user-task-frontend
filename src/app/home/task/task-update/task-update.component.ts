@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
+import { Task } from './../../../types';
 import { TaskRepositoryService } from './../../../shared/task-repository.service';
 import { FormsService } from './../../../shared/forms.service';
 
@@ -13,6 +14,7 @@ import { FormsService } from './../../../shared/forms.service';
 })
 export class TaskUpdateComponent implements OnInit {
   formulario!: FormGroup;
+  id!: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,6 +27,22 @@ export class TaskUpdateComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       name: [null, Validators.required],
       description: [null, Validators.required],
+    });
+
+    this.route.params
+      .pipe(
+        map((value) => (this.id = value.id)),
+        map((id) => this.repositoryService.getTask(id)),
+        switchMap((task) => task),
+        map((task) => this.updateForm(task))
+      )
+      .subscribe();
+  }
+
+  private updateForm(task: Task) {
+    this.formulario.patchValue({
+      name: task.name,
+      description: task.description,
     });
   }
 
@@ -40,12 +58,6 @@ export class TaskUpdateComponent implements OnInit {
     const valueSubmit = Object.assign({}, this.formulario.value);
     const { name, description } = valueSubmit;
 
-    this.route.params
-      .pipe(
-        map((value) =>
-          this.repositoryService.updateTask(value.id, name, description)
-        )
-      )
-      .subscribe();
+    this.repositoryService.updateTask(this.id, name, description);
   }
 }

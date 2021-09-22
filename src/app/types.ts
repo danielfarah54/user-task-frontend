@@ -23,6 +23,10 @@ export type QueryTasks = {
   tasks: Task[];
 };
 
+export type QueryTask = {
+  task: Task;
+};
+
 export type QueryUsers = {
   users: User[];
 };

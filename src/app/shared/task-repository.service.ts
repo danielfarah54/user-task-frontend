@@ -7,6 +7,7 @@ import {
   MutationCreateTask,
   MutationDeleteTask,
   MutationUpdateTask,
+  QueryTask,
   QueryTasks,
 } from '../types';
 
@@ -60,6 +61,31 @@ export class TaskRepositoryService {
         `,
       })
       .valueChanges.pipe(map((result) => result.data.tasks));
+  }
+
+  getTask(id: string) {
+    const queryString = gql`
+      query Query($id: Float!) {
+        task(id: $id) {
+          id
+          name
+          description
+          userId
+        }
+      }
+    `;
+
+    return this.apollo
+      .watchQuery<QueryTask>({
+        query: queryString,
+        variables: {
+          id: parseFloat(id),
+        },
+      })
+      .valueChanges.pipe(
+        map((result) => result.data.task),
+        map((task) => task)
+      );
   }
 
   updateTask(id: string, name: string, description: string) {
