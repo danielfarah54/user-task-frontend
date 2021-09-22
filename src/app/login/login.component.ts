@@ -1,8 +1,8 @@
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { AuthService } from './../auth/auth.service';
+import { FormsService } from '../shared/forms.service';
+import { UserRepositoryService } from './../shared/user-repository.service';
 
 @Component({
   selector: 'app-login',
@@ -11,14 +11,11 @@ import { AuthService } from './../auth/auth.service';
 })
 export class LoginComponent implements OnInit {
   formulario!: FormGroup;
-  jwt!: {
-    accessToken: string;
-    expiresIn: string;
-  };
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
+    private repositoryService: UserRepositoryService,
+    private formsService: FormsService
   ) {}
 
   ngOnInit(): void {
@@ -28,45 +25,18 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  createAccount() {
-    console.log('create');
-  }
-
   onSubmit() {
     if (this.formulario.valid) {
       this.submit();
     } else {
-      this.verificaValidacoesForm(this.formulario);
+      this.formsService.verificaValidacoesForm(this.formulario);
     }
-  }
-
-  verificaValidacoesForm(formGroup: FormGroup | FormArray) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      const controle = formGroup.get(campo);
-      controle?.markAsDirty();
-      controle?.markAsTouched();
-      if (controle instanceof FormGroup || controle instanceof FormArray) {
-        this.verificaValidacoesForm(controle);
-      }
-    });
   }
 
   submit() {
     const valueSubmit = Object.assign({}, this.formulario.value);
     const { email, password } = valueSubmit;
 
-    this.authService.login(email, password);
-  }
-
-  public isLoggedIn() {
-    return this.authService.isLoggedIn();
-  }
-
-  isLoggedOut() {
-    return !this.isLoggedIn();
-  }
-
-  resetar() {
-    this.formulario.reset();
+    this.repositoryService.login(email, password);
   }
 }

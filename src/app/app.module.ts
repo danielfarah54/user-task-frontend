@@ -1,12 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { GraphqlService } from './graphql/graphql.service';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { GraphqlService } from './graphql/graphql.service';
 import { HomeModule } from './home/home.module';
 import { LoginModule } from './login/login.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +17,7 @@ import { LoginModule } from './login/login.module';
     HomeModule,
     LoginModule,
     RouterModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent],
