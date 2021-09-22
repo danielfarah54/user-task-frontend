@@ -1,9 +1,8 @@
-import { FormsService } from './../shared/forms.service';
-import { AuthService } from './../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { RepositoryService } from './../shared/repository.service';
+import { FormsService } from '../shared/forms.service';
+import { RepositoryService } from '../shared/repository.service';
 
 @Component({
   selector: 'app-login',
@@ -12,15 +11,10 @@ import { RepositoryService } from './../shared/repository.service';
 })
 export class LoginComponent implements OnInit {
   formulario!: FormGroup;
-  jwt!: {
-    accessToken: string;
-    expiresIn: string;
-  };
 
   constructor(
     private formBuilder: FormBuilder,
     private repositoryService: RepositoryService,
-    private authService: AuthService,
     private formsService: FormsService
   ) {}
 
@@ -29,10 +23,6 @@ export class LoginComponent implements OnInit {
       email: [null, [Validators.required, Validators.email]],
       password: [null, Validators.required],
     });
-  }
-
-  createAccount() {
-    console.log('create');
   }
 
   onSubmit() {
@@ -48,17 +38,5 @@ export class LoginComponent implements OnInit {
     const { email, password } = valueSubmit;
 
     this.repositoryService.login(email, password);
-  }
-
-  public isLoggedIn() {
-    return this.authService.isLoggedIn();
-  }
-
-  isLoggedOut() {
-    return !this.isLoggedIn();
-  }
-
-  resetar() {
-    this.formulario.reset();
   }
 }
