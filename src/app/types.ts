@@ -14,6 +14,11 @@ export type Task = {
   user: User;
 };
 
+export type Token = {
+  accessToken: string;
+  expiresIn: string;
+};
+
 export type QueryTasks = {
   tasks: Task[];
 };
@@ -27,10 +32,7 @@ export type QueryEmails = {
 };
 
 export type MutationLogin = {
-  login: {
-    accessToken: string;
-    expiresIn: string;
-  };
+  login: Token;
 };
 
 export type MutationRegisterUser = {
