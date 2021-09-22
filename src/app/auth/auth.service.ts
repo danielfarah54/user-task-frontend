@@ -9,9 +9,14 @@ import { HeadersService } from './headers.service';
 export class AuthService {
   constructor(private apollo: Apollo, private headersService: HeadersService) {}
 
-  setSession(tokenResult: { accessToken: string; expiresIn: string }) {
+  setSession(tokenResult: {
+    accessToken: string;
+    userId: string;
+    expiresIn: string;
+  }) {
     this.headersService.setHeaders(
       tokenResult.accessToken,
+      tokenResult.userId,
       tokenResult.expiresIn
     );
   }

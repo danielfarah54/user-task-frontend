@@ -16,6 +16,7 @@ export type Task = {
 
 export type Token = {
   accessToken: string;
+  userId: string;
   expiresIn: string;
 };
 

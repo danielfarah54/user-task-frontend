@@ -52,6 +52,7 @@ export class UserRepositoryService {
         map((token: Token) =>
           this.authService.setSession({
             accessToken: token.accessToken,
+            userId: token.userId,
             expiresIn: token.expiresIn,
           })
         ),

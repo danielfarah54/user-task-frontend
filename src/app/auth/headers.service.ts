@@ -6,13 +6,15 @@ import { Injectable } from '@angular/core';
 export class HeadersService {
   constructor() {}
 
-  setHeaders(accessToken: string, expiresAt: string) {
+  setHeaders(accessToken: string, userId: string, expiresAt: string) {
     localStorage.setItem('id_token', accessToken);
+    localStorage.setItem('user_id', userId);
     localStorage.setItem('expires_at', expiresAt);
   }
 
   revokeHeaders() {
     localStorage.removeItem('id_token');
+    localStorage.removeItem('user_id');
     localStorage.removeItem('expires_at');
   }
 }
