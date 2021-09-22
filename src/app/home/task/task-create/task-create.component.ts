@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { FormsService } from '../../../shared/forms.service';
-import { RepositoryService } from '../../../shared/repository.service';
+import { TaskRepositoryService } from '../../../shared/task-repository.service';
 
 @Component({
   selector: 'app-task-create',
@@ -15,7 +15,7 @@ export class TaskCreateComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private formsService: FormsService,
-    private repositoryService: RepositoryService
+    private repositoryService: TaskRepositoryService
   ) {}
 
   ngOnInit(): void {

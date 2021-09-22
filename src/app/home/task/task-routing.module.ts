@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { TaskCreateComponent } from './task-create/task-create.component';
-import { TaskDeleteComponent } from './task-delete/task-delete.component';
+// import { TaskDeleteComponent } from './task-delete/task-delete.component';
 import { TaskListaComponent } from './task-lista/task-lista.component';
 
 const routes: Routes = [
@@ -11,7 +11,7 @@ const routes: Routes = [
     component: TaskListaComponent,
   },
   { path: 'create', component: TaskCreateComponent },
-  { path: 'delete/:id', component: TaskDeleteComponent },
+  // { path: 'delete/:id', component: TaskDeleteComponent },
 ];
 
 @NgModule({

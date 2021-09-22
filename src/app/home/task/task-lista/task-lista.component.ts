@@ -4,7 +4,7 @@ import { map, take, switchMap } from 'rxjs/operators';
 import { Observable, EMPTY } from 'rxjs';
 
 import { ModalService } from '../../../shared/modal.service';
-import { RepositoryService } from '../../../shared/repository.service';
+import { TaskRepositoryService } from '../../../shared/task-repository.service';
 import { Task } from '../../../types';
 
 @Component({
@@ -20,7 +20,7 @@ export class TaskListaComponent implements OnInit {
 
   constructor(
     private modalService: ModalService,
-    private repositoryService: RepositoryService
+    private repositoryService: TaskRepositoryService
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +43,10 @@ export class TaskListaComponent implements OnInit {
       .asObservable()
       .pipe(
         take(1),
+        map((res) => {
+          console.log(id);
+          return res;
+        }),
         switchMap(async (result) =>
           result ? this.repositoryService.deleteTask(id) : EMPTY
         )

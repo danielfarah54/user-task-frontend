@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { FormsService } from '../shared/forms.service';
-import { RepositoryService } from '../shared/repository.service';
+import { UserRepositoryService } from './../shared/user-repository.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private repositoryService: RepositoryService,
+    private repositoryService: UserRepositoryService,
     private formsService: FormsService
   ) {}
 
