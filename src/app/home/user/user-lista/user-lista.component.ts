@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { User, QueryUsers } from '../../../types';
+import { User } from '../../../types';
+import { UserRepositoryService } from './../../../shared/user-repository.service';
 
 @Component({
   selector: 'app-user-lista',
@@ -13,21 +13,17 @@ import { User, QueryUsers } from '../../../types';
 export class UserListaComponent implements OnInit {
   users!: Observable<User[]>;
 
-  constructor(private apollo: Apollo) {}
+  constructor(private repositoryService: UserRepositoryService) {}
 
   ngOnInit(): void {
-    this.users = this.apollo
-      .watchQuery<QueryUsers>({
-        query: gql`
-          query Query {
-            users {
-              id
-              name
-              email
-            }
-          }
-        `,
-      })
-      .valueChanges.pipe(map((result) => result.data.users));
+    this.users = this.repositoryService.getUsers();
+    this.repositoryService.listEmitter
+      .pipe(
+        map((v) =>
+          v == true ? (this.users = this.repositoryService.getUsers()) : null
+        ),
+        map(() => window.location.replace('home/users'))
+      )
+      .subscribe();
   }
 }

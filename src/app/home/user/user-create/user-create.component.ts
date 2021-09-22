@@ -1,11 +1,9 @@
-import { Apollo, gql } from 'apollo-angular';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { EMPTY } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { map, catchError, tap } from 'rxjs/operators';
 
+import { UserRepositoryService } from './../../../shared/user-repository.service';
 import { FormsService } from '../../../shared/forms.service';
-import { MutationRegisterUser } from '../../../types';
 
 @Component({
   selector: 'app-user-create',
@@ -17,8 +15,9 @@ export class UserCreateComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private apollo: Apollo,
-    private formsService: FormsService
+    private formsService: FormsService,
+    private repositoryService: UserRepositoryService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -41,31 +40,7 @@ export class UserCreateComponent implements OnInit {
     const valueSubmit = Object.assign({}, this.formulario.value);
     const { name, email, password } = valueSubmit;
 
-    // console.log(`values: ${JSON.stringify(valueSubmit)}`);
-
-    const mutationString = gql`
-      mutation Mutation($name: String!, $email: String!, $password: String!) {
-        registerUser(name: $name, email: $email, password: $password)
-      }
-    `;
-
-    this.apollo
-      .mutate<MutationRegisterUser>({
-        mutation: mutationString,
-        variables: {
-          name,
-          email,
-          password,
-        },
-      })
-      .pipe(
-        map((result) => result.data?.registerUser),
-        catchError((err) => {
-          console.error(`DEU RUIM: ${err}`);
-          return EMPTY;
-        }),
-        tap((registerUser) => console.log(`registerUser: ${registerUser}`))
-      )
-      .subscribe();
+    this.repositoryService.createUser(name, email, password);
+    this.router.navigate(['login']);
   }
 }
