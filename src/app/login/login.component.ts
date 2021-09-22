@@ -1,8 +1,8 @@
-import { Router } from '@angular/router';
+import { AuthService } from './../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { AuthService } from './../auth/auth.service';
+import { RepositoryService } from './../shared/repository.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +18,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
+    private repositoryService: RepositoryService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -55,7 +56,7 @@ export class LoginComponent implements OnInit {
     const valueSubmit = Object.assign({}, this.formulario.value);
     const { email, password } = valueSubmit;
 
-    this.authService.login(email, password);
+    this.repositoryService.login(email, password);
   }
 
   public isLoggedIn() {
