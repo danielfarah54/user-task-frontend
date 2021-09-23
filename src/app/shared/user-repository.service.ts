@@ -29,6 +29,7 @@ export class UserRepositoryService {
       mutation Mutation($email: String!, $password: String!) {
         login(email: $email, password: $password) {
           accessToken
+          userId
           expiresIn
         }
       }

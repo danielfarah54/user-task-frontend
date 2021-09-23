@@ -8,15 +8,11 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
+  user_id!: string | null;
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   onProfile() {
-    localStorage.getItem('id_token')
-    // this.route.params.pipe(
-    //   map((params) => params.id),
-    //   map((id) =>
-    //     this.router.navigate(['profile', id], { relativeTo: this.route })
-    //   )
-    // );
+    this.user_id = localStorage.getItem('user_id');
+    this.router.navigate(['profile', this.user_id], { relativeTo: this.route });
   }
 }
