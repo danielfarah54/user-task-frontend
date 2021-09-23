@@ -7,6 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import {
   MutationLogin,
   MutationRegisterUser,
+  MutationUpdateUser,
   QueryUser,
   QueryUsers,
   Token,
@@ -123,5 +124,30 @@ export class UserRepositoryService {
         `,
       })
       .valueChanges.pipe(map((result) => result.data.user));
+  }
+
+  updateUser(name: string, email: string) {
+    const mutationString = gql`
+      mutation Mutation($name: String!, $email: String!) {
+        updateUser(name: $name, email: $email)
+      }
+    `;
+
+    this.apollo
+      .mutate<MutationUpdateUser>({
+        mutation: mutationString,
+        variables: {
+          name,
+          email,
+        },
+      })
+      .pipe(
+        map((result) => result.data?.updateUser),
+        catchError((err) => {
+          console.error(`DEU RUIM: ${err}`);
+          return EMPTY;
+        })
+      )
+      .subscribe();
   }
 }

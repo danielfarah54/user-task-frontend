@@ -1,6 +1,5 @@
-import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 
 import { User } from './../../../types';
@@ -17,9 +16,7 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private repositoryService: UserRepositoryService,
-    private formBuilder: FormBuilder,
-    private router: Router,
-    private route: ActivatedRoute
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -36,10 +33,8 @@ export class UserProfileComponent implements OnInit {
       .pipe(
         map((user) => {
           this.updateProfile(user);
-          // console.log('user', user)
           return user.id;
         }),
-        // tap(id => console.log(id)),
         map((id: number) => (this.user_id = id.toString()))
       )
       .subscribe();
@@ -53,6 +48,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   onSubmit() {
-    window.location.replace(`home/profile/edit/${this.user_id}`)
+    window.location.replace(`home/profile/edit/${this.user_id}`);
   }
 }
