@@ -7,6 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import {
   MutationLogin,
   MutationRegisterUser,
+  QueryUser,
   QueryUsers,
   Token,
 } from '../types';
@@ -106,5 +107,21 @@ export class UserRepositoryService {
         `,
       })
       .valueChanges.pipe(map((result) => result.data.users));
+  }
+
+  getUser() {
+    return this.apollo
+      .watchQuery<QueryUser>({
+        query: gql`
+          query Query {
+            user {
+              id
+              name
+              email
+            }
+          }
+        `,
+      })
+      .valueChanges.pipe(map((result) => result.data.user));
   }
 }

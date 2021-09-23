@@ -1,1 +1,36 @@
-<p>user-profile works!</p>
+<!-- <div [formGroup]="formulario">
+  <div class="card p-3 m-5">
+    <div class="card-header">Profile</div>
+    <div class="card-body">
+      <input type="text" class="card-title" formControlName="name" /><p></p>
+      <input type="text" class="card-title" formControlName="email" /><p></p>
+      <a href="#" class="btn btn-primary">Edit</a>
+    </div>
+  </div>
+</div> -->
+
+<form class="container" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+  <div class="card p-5">
+    <div class="p-3">
+      <label for="name" class="form-label">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        formControlName="name"
+      />
+    </div>
+    <div class="p-3">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        formControlName="email"
+      />
+    </div>
+    <div class="d-grid p-3">
+      <button type="submit" class="btn btn-primary">Edit</button>
+    </div>
+  </div>
+</form>

@@ -32,6 +32,10 @@ export type QueryUsers = {
   users: User[];
 };
 
+export type QueryUser = {
+  user: User;
+};
+
 export type QueryEmails = {
   emails: User[];
 };

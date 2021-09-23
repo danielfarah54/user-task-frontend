@@ -5,6 +5,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './home/logout/logout.component';
+import { UserEditComponent } from './home/user/user-edit/user-edit.component';
 import { UserCreateComponent } from './home/user/user-create/user-create.component';
 import { UserListaComponent } from './home/user/user-lista/user-lista.component';
 import { UserProfileComponent } from './home/user/user-profile/user-profile.component';
@@ -29,6 +30,10 @@ const routes: Routes = [
       {
         path: 'profile/:id',
         component: UserProfileComponent,
+      },
+      {
+        path: 'profile/edit/:id',
+        component: UserEditComponent,
       },
       {
         path: 'logout',

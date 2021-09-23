@@ -15,7 +15,7 @@ import { UserModule } from './user/user.module';
   declarations: [
     HeaderComponent,
     HomeComponent,
-    LogoutComponent
+    LogoutComponent,
   ],
   imports: [
     CommonModule,
