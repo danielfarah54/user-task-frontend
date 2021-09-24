@@ -1,9 +1,11 @@
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { map } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 
+import { ModalService } from './../../../shared/modal.service';
 import { User } from './../../../types';
 import { UserRepositoryService } from './../../../shared/user-repository.service';
+import { EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-user-profile',
@@ -16,7 +18,8 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private repositoryService: UserRepositoryService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private modalService: ModalService
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +55,17 @@ export class UserProfileComponent implements OnInit {
   }
 
   onDelete() {
-    this.repositoryService.deleteUser();
+    const title = 'Confirmação';
+    const body = 'Tem certeza que deseja excluir a tarefa?';
+    const result$ = this.modalService.showConfirm(title, body);
+    result$
+      .asObservable()
+      .pipe(
+        take(1),
+        switchMap(async (result) =>
+          result ? this.repositoryService.deleteUser() : EMPTY
+        )
+      )
+      .subscribe();
   }
 }
