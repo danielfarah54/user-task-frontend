@@ -4,6 +4,7 @@ import { EMPTY } from 'rxjs';
 import { EventEmitter, Injectable } from '@angular/core';
 
 import {
+  MutationCheckTask,
   MutationCreateTask,
   MutationDeleteTask,
   MutationUpdateTask,
@@ -54,6 +55,7 @@ export class TaskRepositoryService {
               name
               description
               userId
+              completed
             }
           }
         `,
@@ -119,6 +121,7 @@ export class TaskRepositoryService {
         deleteTask(id: $id)
       }
     `;
+
     this.apollo
       .mutate<MutationDeleteTask>({
         mutation: mutationString,
@@ -128,6 +131,31 @@ export class TaskRepositoryService {
       })
       .pipe(
         map((result) => result.data?.deleteTask),
+        catchError((err) => {
+          console.error(`DEU RUIM: ${err}`);
+          return EMPTY;
+        }),
+        map(() => this.listEmitter.emit(true))
+      )
+      .subscribe();
+  }
+
+  checkTask(id: number) {
+    const mutationString = gql`
+      mutation Mutation($id: Float!) {
+        checkTask(id: $id)
+      }
+    `;
+
+    this.apollo
+      .mutate<MutationCheckTask>({
+        mutation: mutationString,
+        variables: {
+          id,
+        },
+      })
+      .pipe(
+        map((result) => result.data?.checkTask),
         catchError((err) => {
           console.error(`DEU RUIM: ${err}`);
           return EMPTY;

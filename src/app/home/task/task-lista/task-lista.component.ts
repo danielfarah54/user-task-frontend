@@ -15,6 +15,10 @@ import { Task } from '../../../types';
 export class TaskListaComponent implements OnInit {
   tasks!: Observable<Task[]>;
   modalRef?: BsModalRef;
+  taskStatus = {
+    done: 'Mark as done',
+    undone: 'Mark as undone',
+  };
 
   @ViewChild('deleteModal') deleteModal: any;
 
@@ -59,5 +63,9 @@ export class TaskListaComponent implements OnInit {
           throw new Error('DEU RUIM!!');
         }
       );
+  }
+
+  onCheck(task: Task) {
+    this.repositoryService.checkTask(task.id);
   }
 }

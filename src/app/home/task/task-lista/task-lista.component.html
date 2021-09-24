@@ -10,7 +10,18 @@
         Description: {{ task.description }}
       </h6>
       <p class="card-text">Task ID: {{ task.id }}</p>
+      <p class="card-text">Done: {{ task.completed }}</p>
       <p class="card-text">User ID: {{ task.userId }}</p>
+      <div *ngIf="task.completed; else buttonUndone">
+        <button type="button" (click)="onCheck(task)" class="btn btn-success">
+          {{ taskStatus.undone }}
+        </button>
+      </div>
+      <ng-template #buttonUndone>
+        <button type="button" (click)="onCheck(task)" class="btn btn-success">
+          {{ taskStatus.done }}
+        </button>
+      </ng-template>
     </div>
   </div>
   <div class="delete-icon">

@@ -66,3 +66,7 @@ export type MutationUpdateTask = {
 export type MutationDeleteTask = {
   deleteTask: boolean;
 };
+
+export type MutationCheckTask = {
+  checkTask: boolean;
+};
