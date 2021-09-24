@@ -25,7 +25,6 @@ export class UserEditComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       name: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
-      // password: [null, Validators.required],
     });
 
     this.repositoryService

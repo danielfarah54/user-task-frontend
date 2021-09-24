@@ -1,6 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component } from '@angular/core';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',

@@ -5,26 +5,19 @@ import { RouterModule } from '@angular/router';
 
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home.component';
-import { HomeRoutingModule } from './home-routing.module';
 import { LogoutComponent } from './logout/logout.component';
 import { TaskModule } from './task/task.module';
 import { UserModule } from './user/user.module';
 
-
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    HomeComponent,
-    LogoutComponent,
-  ],
+  declarations: [HeaderComponent, HomeComponent, LogoutComponent],
   imports: [
     CommonModule,
-    HomeRoutingModule,
     HttpClientModule,
     RouterModule,
     TaskModule,
-    UserModule
+    UserModule,
   ],
   bootstrap: [HomeComponent],
 })
-export class HomeModule { }
+export class HomeModule {}

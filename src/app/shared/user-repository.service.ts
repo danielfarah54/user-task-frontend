@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { gql, Apollo } from 'apollo-angular';
 import { Injectable, EventEmitter } from '@angular/core';
 import { EMPTY } from 'rxjs';
-import { catchError, map, tap, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 import {
   MutationDeleteUser,
@@ -52,7 +52,6 @@ export class UserRepositoryService {
           console.error(`DEU RUIM: ${err}`);
           return EMPTY;
         }),
-        tap((token: Token) => console.log(`jwt: ${JSON.stringify(token)}`)),
         map((token: Token) =>
           this.authService.setSession({
             accessToken: token.accessToken,
@@ -60,7 +59,7 @@ export class UserRepositoryService {
             expiresIn: token.expiresIn,
           })
         ),
-        map((_) => {
+        map(() => {
           this.router.navigate(['home/tasks']);
         })
       )
@@ -89,7 +88,6 @@ export class UserRepositoryService {
           console.error(`DEU RUIM: ${err}`);
           return EMPTY;
         }),
-        tap((registerUser) => console.log(`registerUser: ${registerUser}`)),
         map(() => this.listEmitter.emit(true))
       )
       .subscribe();

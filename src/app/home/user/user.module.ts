@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { UserListaComponent } from './user-lista/user-lista.component';
-import { UserRoutingModule } from './user-routing.module';
 import { UserCreateComponent } from './user-create/user-create.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
@@ -15,6 +14,6 @@ import { UserEditComponent } from './user-edit/user-edit.component';
     UserProfileComponent,
     UserEditComponent,
   ],
-  imports: [CommonModule, UserRoutingModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
 })
 export class UserModule {}

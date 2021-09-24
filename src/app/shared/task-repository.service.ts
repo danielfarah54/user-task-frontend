@@ -1,5 +1,5 @@
 import { Apollo, gql } from 'apollo-angular';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { EventEmitter, Injectable } from '@angular/core';
 
@@ -35,12 +35,10 @@ export class TaskRepositoryService {
       })
       .pipe(
         map((result) => result.data?.registerTask),
-        tap((c) => console.log('resultao:', c)),
         catchError((err) => {
           console.error(`DEU RUIM: ${err}`);
           return EMPTY;
         }),
-        tap((registerTask) => console.log(`registerTask: ${registerTask}`)),
         map(() => this.listEmitter.emit(true))
       )
       .subscribe();
@@ -94,7 +92,6 @@ export class TaskRepositoryService {
         updateTask(name: $name, description: $description, id: $id)
       }
     `;
-    // console.log(`id: ${typeof id}, name: ${name}, description: ${description}`);
 
     this.apollo
       .mutate<MutationUpdateTask>({
