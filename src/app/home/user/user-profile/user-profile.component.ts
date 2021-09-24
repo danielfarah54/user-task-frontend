@@ -50,4 +50,8 @@ export class UserProfileComponent implements OnInit {
   onSubmit() {
     window.location.replace(`home/profile/edit/${this.user_id}`);
   }
+
+  onDelete() {
+    this.repositoryService.deleteUser();
+  }
 }

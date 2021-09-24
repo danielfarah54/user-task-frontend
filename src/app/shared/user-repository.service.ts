@@ -2,9 +2,10 @@ import { Router } from '@angular/router';
 import { gql, Apollo } from 'apollo-angular';
 import { Injectable, EventEmitter } from '@angular/core';
 import { EMPTY } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, tap, switchMap } from 'rxjs/operators';
 
 import {
+  MutationDeleteUser,
   MutationLogin,
   MutationRegisterUser,
   MutationUpdateUser,
@@ -147,6 +148,28 @@ export class UserRepositoryService {
           console.error(`DEU RUIM: ${err}`);
           return EMPTY;
         })
+      )
+      .subscribe();
+  }
+
+  deleteUser() {
+    const mutationString = gql`
+      mutation Mutation {
+        deleteUser
+      }
+    `;
+
+    this.apollo
+      .mutate<MutationDeleteUser>({
+        mutation: mutationString,
+      })
+      .pipe(
+        map((result) => result.data?.deleteUser),
+        catchError((err) => {
+          console.error(`DEU RUIM: ${err}`);
+          return EMPTY;
+        }),
+        switchMap(() => this.router.navigate(['home/logout']))
       )
       .subscribe();
   }
