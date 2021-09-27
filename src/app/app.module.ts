@@ -8,9 +8,10 @@ import { GraphqlService } from './graphql/graphql.service';
 import { HomeModule } from './home/home.module';
 import { LoginModule } from './login/login.module';
 import { SharedModule } from './shared/shared.module';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, NotFoundComponent],
   imports: [
     AppRoutingModule,
     BrowserModule,

@@ -8,6 +8,7 @@ import { LogoutComponent } from './home/logout/logout.component';
 import { UserEditComponent } from './home/user/user-edit/user-edit.component';
 import { UserCreateComponent } from './home/user/user-create/user-create.component';
 import { UserProfileComponent } from './home/user/user-profile/user-profile.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -17,6 +18,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     component: HomeComponent,
     children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'tasks',
+      },
       {
         path: 'tasks',
         loadChildren: () =>
@@ -40,10 +46,10 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
-  // {
-  //   path: '*',
-  //   component: NotFoundComponent,
-  // },
+  {
+    path: '**',
+    component: NotFoundComponent,
+  },
 ];
 
 @NgModule({
