@@ -1,0 +1,19 @@
+$font-size: 10rem;
+
+.not-found {
+  text-align: center;
+  min-width: 290px;
+  margin-top: 15rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.four {
+  font-size: $font-size;
+  padding: 5px;
+}
+
+.spinner-border {
+  width: 0.5 * $font-size;
+  height: 0.5 * $font-size;
+}
