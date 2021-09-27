@@ -21,10 +21,6 @@ export type MutationRegisterUser = {
   registerUser: boolean;
 };
 
-export type QueryUsers = {
-  users: User[];
-};
-
 export type QueryUser = {
   user: User;
 };

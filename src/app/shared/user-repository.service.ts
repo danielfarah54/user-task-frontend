@@ -10,7 +10,6 @@ import {
   MutationRegisterUser,
   MutationUpdateUser,
   QueryUser,
-  QueryUsers,
   Token,
 } from '../types';
 import { AuthService } from '../auth/auth.service';
@@ -91,22 +90,6 @@ export class UserRepositoryService {
         map(() => this.listEmitter.emit(true))
       )
       .subscribe();
-  }
-
-  getUsers() {
-    return this.apollo
-      .watchQuery<QueryUsers>({
-        query: gql`
-          query Query {
-            users {
-              id
-              name
-              email
-            }
-          }
-        `,
-      })
-      .valueChanges.pipe(map((result) => result.data.users));
   }
 
   getUser() {
