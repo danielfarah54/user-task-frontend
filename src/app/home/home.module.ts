@@ -20,4 +20,5 @@ import { UserModule } from './user/user.module';
   ],
   bootstrap: [HomeComponent],
 })
-export class HomeModule {}
+export class HomeModule {
+}

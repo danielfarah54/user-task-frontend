@@ -4,13 +4,19 @@ import { Apollo } from 'apollo-angular';
 import { Injectable } from '@angular/core';
 import { InMemoryCache, ApolloLink } from '@apollo/client/core';
 
+import { HeadersService } from './../auth/headers.service';
+
 const uri = 'http://localhost:4000/graphql';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GraphqlService {
-  constructor(private apollo: Apollo, private httpLink: HttpLink) {}
+  constructor(
+    private apollo: Apollo,
+    private httpLink: HttpLink,
+    private headersService: HeadersService
+  ) {}
 
   createApollo() {
     const basic = setContext((operation, context) => ({
@@ -19,8 +25,13 @@ export class GraphqlService {
       },
     }));
 
-    const auth = setContext((operation, context) => {
-      const token = localStorage.getItem('id_token');
+    const auth = setContext(async (operation, context) => {
+      let token = localStorage.getItem('id_token');
+
+      if (token === null) {
+        await this.headersService.fetchRefreshToken();
+        token = localStorage.getItem('id_token');
+      }
 
       if (token === null) {
         return {};
@@ -38,7 +49,7 @@ export class GraphqlService {
       auth,
       this.httpLink.create({ uri, withCredentials: true }),
     ]);
-    const cache = new InMemoryCache();
+    const cache = new InMemoryCache({});
 
     this.apollo.create({
       link,

@@ -17,4 +17,14 @@ export class HeadersService {
     localStorage.removeItem('user_id');
     localStorage.removeItem('expires_at');
   }
+
+  async fetchRefreshToken() {
+    return await fetch('http://localhost:4000/refresh_token', {
+      method: 'POST',
+      credentials: 'include',
+    }).then(async (x) => {
+      const { accessToken, userId, expiresIn } = await x.json();
+      this.setHeaders(accessToken, userId, expiresIn);
+    });
+  }
 }
