@@ -33,7 +33,11 @@ export class GraphqlService {
       }
     });
 
-    const link = ApolloLink.from([basic, auth, this.httpLink.create({ uri })]);
+    const link = ApolloLink.from([
+      basic,
+      auth,
+      this.httpLink.create({ uri, withCredentials: true }),
+    ]);
     const cache = new InMemoryCache();
 
     this.apollo.create({
