@@ -28,9 +28,14 @@
       />
     </div>
     <div class="btn-container">
-      <button type="submit" class="btn btn-primary">
-        Submit
+      <button
+        type="button"
+        (click)="onCancel()"
+        class="btn btn-outline-primary"
+      >
+        Cancel
       </button>
+      <button type="submit" class="btn btn-primary">Submit</button>
     </div>
   </div>
 </form>
