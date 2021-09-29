@@ -1,4 +1,6 @@
+<h3 class="header-message welcome">Create new account</h3>
 <form class="container" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+  <h4 class="header-message"></h4>
   <div class="sub-container">
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
@@ -7,15 +9,17 @@
         class="form-control"
         id="name"
         formControlName="name"
+        placeholder="Name"
       />
     </div>
     <div class="mb-3">
-      <label for="email" class="form-label">Email address</label>
+      <label for="email" class="form-label">Email</label>
       <input
         type="email"
         class="form-control"
         id="email"
         formControlName="email"
+        placeholder="Email"
       />
     </div>
     <div class="mb-3">
@@ -25,6 +29,7 @@
         class="form-control"
         id="password"
         formControlName="password"
+        placeholder="Password"
       />
     </div>
     <div class="btn-container">
