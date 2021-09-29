@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 
 import { Task } from './../../../types';
@@ -20,7 +20,8 @@ export class TaskUpdateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private formsService: FormsService,
     private repositoryService: TaskRepositoryService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -59,5 +60,9 @@ export class TaskUpdateComponent implements OnInit {
     const { name, description } = valueSubmit;
 
     this.repositoryService.updateTask(this.id, name, description);
+  }
+
+  onClick() {
+    this.router.navigate(['home'])
   }
 }

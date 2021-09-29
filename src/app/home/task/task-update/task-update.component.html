@@ -1,28 +1,27 @@
-<form
-  class="container"
-  [formGroup]="formulario"
-  (ngSubmit)="onSubmit()"
-  >
+<form class="container" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+  <h4 class="header-message">Update task</h4>
   <div class="sub-container">
-    <div class="mb-3">
-      <label for="name" class="form-label">Task Name</label>
+    <div class="form-floating">
       <input
         type="text"
         class="form-control"
         id="name"
         formControlName="name"
       />
+      <label for="name" class="form-label">Task Name</label>
     </div>
     <div class="form-floating">
       <textarea
         class="form-control"
         formControlName="description"
         id="description"
-        style="height: 100px"
       ></textarea>
       <label for="description">Task Description</label>
     </div>
     <div class="btn-container">
+      <button type="button" class="btn btn-outline-primary" (click)="onClick()">
+        Cancel
+      </button>
       <button type="submit" class="btn btn-primary">Submit</button>
     </div>
   </div>
