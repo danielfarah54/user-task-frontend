@@ -3,25 +3,25 @@
   <img class="logo" src="../../assets/user-task-logo-cropped.png" />
   <h4 class="header-message">Fazer login</h4>
   <div class="sub-container">
-    <div class="mb-3">
+    <div class="form-floating">
+      <input
+      type="email"
+      class="form-control"
+      id="email"
+      formControlName="email"
+      placeholder="Email"
+      />
       <label for="email" class="form-label">Email</label>
-      <input
-        type="email"
-        class="form-control"
-        id="email"
-        formControlName="email"
-        placeholder="Email"
-      />
     </div>
-    <div class="mb-3">
-      <label for="password" class="form-label">Password</label>
+    <div class="form-floating">
       <input
-        type="password"
-        class="form-control"
-        id="password"
-        formControlName="password"
-        placeholder="Password"
+      type="password"
+      class="form-control"
+      id="password"
+      formControlName="password"
+      placeholder="Password"
       />
+      <label for="password" class="form-label">Password</label>
     </div>
     <div class="btn-container">
       <!-- <a class="nav-link" href="/create"> -->

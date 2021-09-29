@@ -1,22 +1,24 @@
 <form class="container" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+  <h4 class="header-message">Create new task</h4>
   <div class="sub-container">
-    <div class="mb-3">
-      <label for="name" class="form-label">Task Name</label>
+    <div class="form-floating">
       <input
         type="text"
         class="form-control"
         id="name"
         formControlName="name"
+        placeholder="Name"
       />
+      <label for="name">Name</label>
     </div>
     <div class="form-floating">
       <textarea
         class="form-control"
         formControlName="description"
         id="description"
-        style="height: 100px"
+        placeholder="Description"
       ></textarea>
-      <label for="description">Task Description</label>
+      <label for="description">Description</label>
     </div>
     <div class="btn-container">
       <button type="submit" class="btn btn-primary">Submit</button>
