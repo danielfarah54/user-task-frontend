@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { FormsService } from './../../../shared/forms.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -18,7 +19,8 @@ export class UserEditComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private repositoryService: UserRepositoryService,
-    private formsService: FormsService
+    private formsService: FormsService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -59,5 +61,9 @@ export class UserEditComponent implements OnInit {
     const { name, email } = valueSubmit;
     this.repositoryService.updateUser(name, email);
     window.location.replace(`home/profile/${this.user_id}`);
+  }
+
+  onCancel() {
+    this.router.navigate(['home/profile', this.user_id]);
   }
 }
