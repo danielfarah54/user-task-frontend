@@ -8,6 +8,7 @@ import {
   MutationDeleteUser,
   MutationLogin,
   MutationRegisterUser,
+  MutationRevokeRefreshTokens,
   MutationUpdateUser,
   QueryUser,
   Token,
@@ -151,6 +152,27 @@ export class UserRepositoryService {
           return EMPTY;
         }),
         switchMap(() => this.router.navigate(['home/logout']))
+      )
+      .subscribe();
+  }
+
+  revokeRefreshTokens() {
+    const mutationString = gql`
+      mutation Mutation {
+        revokeRefreshTokensForUser
+      }
+    `;
+
+    this.apollo
+      .mutate<MutationRevokeRefreshTokens>({
+        mutation: mutationString,
+      })
+      .pipe(
+        map((result) => result.data?.revokeRefreshTokensForUser),
+        catchError((err) => {
+          console.error(`DEU RUIM: ${err}`);
+          return EMPTY;
+        })
       )
       .subscribe();
   }

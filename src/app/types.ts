@@ -9,6 +9,10 @@ export type MutationLogin = {
   login: Token;
 };
 
+export type MutationRevokeRefreshTokens = {
+  revokeRefreshTokensForUser: boolean;
+};
+
 // user
 export type User = {
   id: number;
