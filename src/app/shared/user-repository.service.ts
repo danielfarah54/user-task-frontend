@@ -60,7 +60,7 @@ export class UserRepositoryService {
           })
         ),
         map(() => {
-          this.router.navigate(['home/tasks']);
+          window.location.replace('home')
         })
       )
       .subscribe();

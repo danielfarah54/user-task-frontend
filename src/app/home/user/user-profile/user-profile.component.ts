@@ -15,6 +15,7 @@ import { EMPTY } from 'rxjs';
 export class UserProfileComponent implements OnInit {
   user_id!: string;
   formulario!: FormGroup;
+  user = { name: '', email: '' };
 
   constructor(
     private repositoryService: UserRepositoryService,
@@ -27,9 +28,6 @@ export class UserProfileComponent implements OnInit {
       name: [null],
       email: [null],
     });
-
-    this.formulario.get('name')?.disable();
-    this.formulario.get('email')?.disable();
 
     this.repositoryService
       .getUser()
@@ -44,10 +42,8 @@ export class UserProfileComponent implements OnInit {
   }
 
   private updateProfile(user: User) {
-    this.formulario.patchValue({
-      name: user.name,
-      email: user.email,
-    });
+    this.user.name = user.name;
+    this.user.email = user.email;
   }
 
   onSubmit() {
