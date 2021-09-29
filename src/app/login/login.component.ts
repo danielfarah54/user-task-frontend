@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private repositoryService: UserRepositoryService,
-    private formsService: FormsService
+    private formsService: FormsService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -38,5 +40,9 @@ export class LoginComponent implements OnInit {
     const { email, password } = valueSubmit;
 
     this.repositoryService.login(email, password);
+  }
+
+  onCreate() {
+    this.router.navigate(['create']);
   }
 }
