@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -15,7 +16,8 @@ export class TaskCreateComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private formsService: FormsService,
-    private repositoryService: TaskRepositoryService
+    private repositoryService: TaskRepositoryService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -37,5 +39,9 @@ export class TaskCreateComponent implements OnInit {
     const valueSubmit = Object.assign({}, this.formulario.value);
     const { name, description } = valueSubmit;
     this.repositoryService.createTask(name, description);
+  }
+
+  onClick() {
+    this.router.navigate(['home'])
   }
 }
