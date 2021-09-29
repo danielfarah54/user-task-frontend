@@ -55,8 +55,9 @@ export class UserProfileComponent implements OnInit {
   }
 
   onDelete() {
-    const title = 'Confirmação';
-    const body = 'Tem certeza que deseja excluir a tarefa?';
+    const title = 'Confirmação de Exclusão';
+    const body =
+      'Tem certeza que deseja EXCLUIR sua conta PERMANENTEMENTE? Essa ação NÃO é reversível!';
     const result$ = this.modalService.showConfirm(title, body);
     result$
       .asObservable()
