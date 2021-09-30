@@ -7,16 +7,26 @@
         class="form-control"
         id="name"
         formControlName="name"
+        [ngClass]="aplicaCssErro('name')"
       />
       <label for="name" class="form-label">Task Name</label>
+      <div *ngIf="isValid; else nameFeedback"></div>
+      <ng-template #nameFeedback>
+        <div class="invalid-feedback">Please provide a valid name.</div>
+      </ng-template>
     </div>
     <div class="form-floating">
       <textarea
         class="form-control"
         formControlName="description"
         id="description"
+        [ngClass]="aplicaCssErro('description')"
       ></textarea>
       <label for="description">Task Description</label>
+      <div *ngIf="isValid; else descriptionFeedback"></div>
+      <ng-template #descriptionFeedback>
+        <div class="invalid-feedback">Please provide a valid description.</div>
+      </ng-template>
     </div>
     <div class="btn-container">
       <button type="button" class="btn btn-outline-primary" (click)="onClick()">

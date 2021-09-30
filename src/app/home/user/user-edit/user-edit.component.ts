@@ -15,6 +15,7 @@ import { UserRepositoryService } from './../../../shared/user-repository.service
 export class UserEditComponent implements OnInit {
   formulario!: FormGroup;
   user_id!: string;
+  isValid = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -65,5 +66,14 @@ export class UserEditComponent implements OnInit {
 
   onCancel() {
     this.router.navigate(['home/profile', this.user_id]);
+  }
+
+  aplicaCssErro(nomeCampo: string) {
+    const campo = this.formulario.get(nomeCampo)!;
+    this.formsService.verificaInvalid(campo)
+      ? (this.isValid = false)
+      : (this.isValid = true);
+
+    return this.formsService.aplicaCssErro(campo);
   }
 }

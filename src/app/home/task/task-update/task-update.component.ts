@@ -15,6 +15,7 @@ import { FormsService } from './../../../shared/forms.service';
 export class TaskUpdateComponent implements OnInit {
   formulario!: FormGroup;
   id!: string;
+  isValid = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -64,5 +65,14 @@ export class TaskUpdateComponent implements OnInit {
 
   onClick() {
     this.router.navigate(['home'])
+  }
+
+  aplicaCssErro(nomeCampo: string) {
+    const campo = this.formulario.get(nomeCampo)!;
+    this.formsService.verificaInvalid(campo)
+      ? (this.isValid = false)
+      : (this.isValid = true);
+
+    return this.formsService.aplicaCssErro(campo);
   }
 }

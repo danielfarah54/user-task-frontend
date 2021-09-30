@@ -1,26 +1,38 @@
 <form class="container" [formGroup]="formulario" (ngSubmit)="onSubmit()">
   <h4 class="header-message">Edit profile</h4>
   <div class="sub-container">
-    <div class="field">
-      <label class="field-label" for="name">Name</label>
+    <div class="form-floating">
       <input
         type="text"
         class="form-control"
         formControlName="name"
         placeholder="Name"
         id="name"
+        [ngClass]="aplicaCssErro('name')"
       />
+      <label class="form-label" for="name">Name</label>
+      <div *ngIf="isValid; else nameFeedback"></div>
+      <ng-template #nameFeedback>
+        <div class="invalid-feedback">Please provide a valid name.</div>
+      </ng-template>
     </div>
-    <div class="field">
-      <label class="field-label" for="email">Email</label>
+
+    <div class="form-floating">
       <input
         type="email"
         class="form-control"
         formControlName="email"
         placeholder="Email"
         id="email"
+        [ngClass]="aplicaCssErro('email')"
       />
+      <label class="form-label" for="email">Email</label>
+      <div *ngIf="isValid; else emailFeedback"></div>
+      <ng-template #emailFeedback>
+        <div class="invalid-feedback">Please provide a valid email.</div>
+      </ng-template>
     </div>
+
     <div class="btn-container">
       <button
         type="button"

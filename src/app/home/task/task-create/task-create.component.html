@@ -8,8 +8,13 @@
         id="name"
         formControlName="name"
         placeholder="Name"
+        [ngClass]="aplicaCssErro('name')"
       />
       <label for="name">Name</label>
+      <div *ngIf="isValid; else nameFeedback"></div>
+      <ng-template #nameFeedback>
+        <div class="invalid-feedback">Please provide a valid name.</div>
+      </ng-template>
     </div>
     <div class="form-floating">
       <textarea
@@ -17,8 +22,13 @@
         formControlName="description"
         id="description"
         placeholder="Description"
+        [ngClass]="aplicaCssErro('description')"
       ></textarea>
       <label for="description">Description</label>
+      <div *ngIf="isValid; else descriptionFeedback"></div>
+      <ng-template #descriptionFeedback>
+        <div class="invalid-feedback">Please provide a valid description.</div>
+      </ng-template>
     </div>
     <div class="btn-container">
       <button type="button" class="btn btn-outline-primary" (click)="onClick()">

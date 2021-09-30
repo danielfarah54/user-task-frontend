@@ -12,6 +12,7 @@ import { TaskRepositoryService } from '../../../shared/task-repository.service';
 })
 export class TaskCreateComponent implements OnInit {
   formulario!: FormGroup;
+  isValid = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,6 +43,15 @@ export class TaskCreateComponent implements OnInit {
   }
 
   onClick() {
-    this.router.navigate(['home'])
+    this.router.navigate(['home']);
+  }
+
+  aplicaCssErro(nomeCampo: string) {
+    const campo = this.formulario.get(nomeCampo)!;
+    this.formsService.verificaInvalid(campo)
+      ? (this.isValid = false)
+      : (this.isValid = true);
+
+    return this.formsService.aplicaCssErro(campo);
   }
 }
