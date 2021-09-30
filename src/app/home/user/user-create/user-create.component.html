@@ -9,8 +9,13 @@
         id="name"
         formControlName="name"
         placeholder="Name"
+        [ngClass]="aplicaCssErro('name')"
       />
       <label for="name" class="form-label">Name</label>
+      <div *ngIf="isValid; else nameFeedback"></div>
+      <ng-template #nameFeedback>
+        <div class="invalid-feedback">Please provide a valid name.</div>
+      </ng-template>
     </div>
 
     <app-email-password formControlName="login"></app-email-password>

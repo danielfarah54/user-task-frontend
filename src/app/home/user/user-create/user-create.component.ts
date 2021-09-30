@@ -12,6 +12,7 @@ import { FormsService } from '../../../shared/forms.service';
 })
 export class UserCreateComponent implements OnInit {
   formulario!: FormGroup;
+  isValid = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,5 +49,14 @@ export class UserCreateComponent implements OnInit {
 
   onCancel() {
     this.router.navigate(['login']);
+  }
+
+  aplicaCssErro(nomeCampo: string) {
+    const campo = this.formulario.get(nomeCampo)!;
+    this.formsService.verificaInvalid(campo)
+      ? (this.isValid = false)
+      : (this.isValid = true);
+
+    return this.formsService.aplicaCssErro(campo);
   }
 }
