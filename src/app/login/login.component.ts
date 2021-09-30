@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { FormsService } from '../shared/forms.service';
 import { UserRepositoryService } from './../shared/user-repository.service';
@@ -12,6 +12,7 @@ import { UserRepositoryService } from './../shared/user-repository.service';
 })
 export class LoginComponent implements OnInit {
   formulario!: FormGroup;
+  isValid = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,8 +23,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.formulario = this.formBuilder.group({
-      email: [null, [Validators.required, Validators.email]],
-      password: [null, Validators.required],
+      login: [],
     });
   }
 
@@ -37,12 +37,23 @@ export class LoginComponent implements OnInit {
 
   submit() {
     const valueSubmit = Object.assign({}, this.formulario.value);
-    const { email, password } = valueSubmit;
+
+    const { login } = valueSubmit;
+    const { email, password } = login;
 
     this.repositoryService.login(email, password);
   }
 
   onCreate() {
     this.router.navigate(['create']);
+  }
+
+  aplicaCssErro(nomeCampo: string) {
+    const campo = this.formulario.get(nomeCampo)!;
+    this.formsService.verificaInvalid(campo)
+      ? (this.isValid = false)
+      : (this.isValid = true);
+
+    return this.formsService.aplicaCssErro(campo);
   }
 }

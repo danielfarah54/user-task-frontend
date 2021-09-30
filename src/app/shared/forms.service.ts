@@ -1,12 +1,16 @@
-import { FormGroup, FormArray } from '@angular/forms';
+import {
+  FormGroup,
+  FormArray,
+  FormControl,
+  AbstractControl,
+} from '@angular/forms';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FormsService {
-
-  constructor() { }
+  constructor() {}
 
   verificaValidacoesForm(formGroup: FormGroup | FormArray) {
     Object.keys(formGroup.controls).forEach((campo) => {
@@ -17,5 +21,20 @@ export class FormsService {
         this.verificaValidacoesForm(controle);
       }
     });
+  }
+
+  verificaInvalid(campo: AbstractControl) {
+    return !campo.valid && campo.touched;
+  }
+
+  verificaValid(campo: AbstractControl) {
+    return campo.valid && campo.touched;
+  }
+
+  aplicaCssErro(campo: AbstractControl) {
+    return {
+      'is-invalid': this.verificaInvalid(campo),
+      'is-valid': this.verificaValid(campo),
+    };
   }
 }

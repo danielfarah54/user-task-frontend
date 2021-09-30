@@ -3,28 +3,9 @@
   <img class="logo" src="../../assets/user-task-logo-cropped.png" />
   <h4 class="header-message">Fazer login</h4>
   <div class="sub-container">
-    <div class="form-floating">
-      <input
-      type="email"
-      class="form-control"
-      id="email"
-      formControlName="email"
-      placeholder="Email"
-      />
-      <label for="email" class="form-label">Email</label>
-    </div>
-    <div class="form-floating">
-      <input
-      type="password"
-      class="form-control"
-      id="password"
-      formControlName="password"
-      placeholder="Password"
-      />
-      <label for="password" class="form-label">Password</label>
-    </div>
+    <app-email-password formControlName="login"></app-email-password>
+
     <div class="btn-container">
-      <!-- <a class="nav-link" href="/create"> -->
       <button
         type="button"
         (click)="onCreate()"
@@ -32,7 +13,6 @@
       >
         New Account
       </button>
-      <!-- </a> -->
       <button type="submit" class="btn btn-primary">Submit</button>
     </div>
   </div>
