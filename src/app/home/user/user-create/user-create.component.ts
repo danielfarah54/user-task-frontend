@@ -23,8 +23,7 @@ export class UserCreateComponent implements OnInit {
   ngOnInit(): void {
     this.formulario = this.formBuilder.group({
       name: [null, Validators.required],
-      email: [null, [Validators.required, Validators.email]],
-      password: [null, Validators.required],
+      login: [],
     });
   }
 
@@ -38,7 +37,10 @@ export class UserCreateComponent implements OnInit {
 
   submit() {
     const valueSubmit = Object.assign({}, this.formulario.value);
-    const { name, email, password } = valueSubmit;
+    console.log(valueSubmit);
+
+    const { name, login } = valueSubmit;
+    const { email, password } = login;
 
     this.repositoryService.createUser(name, email, password);
     this.router.navigate(['login']);

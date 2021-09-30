@@ -12,26 +12,12 @@
       />
       <label for="name" class="form-label">Name</label>
     </div>
-    <div class="form-floating">
-      <input
-        type="email"
-        class="form-control"
-        id="email"
-        formControlName="email"
-        placeholder="Email"
-      />
-      <label for="email" class="form-label">Email</label>
-    </div>
-    <div class="form-floating">
-      <input
-        type="password"
-        class="form-control"
-        id="password"
-        formControlName="password"
-        placeholder="Password"
-      />
-      <label for="password" class="form-label">Password</label>
-    </div>
+
+    <app-email-password
+      class="login"
+      formControlName="login"
+    ></app-email-password>
+
     <div class="btn-container">
       <button
         type="button"
