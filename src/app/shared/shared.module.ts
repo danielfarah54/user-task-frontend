@@ -6,11 +6,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { EmailPasswordComponent } from './email-password/email-password.component';
+import { AlertComponent } from './alert.component';
 
 @NgModule({
-  declarations: [ConfirmModalComponent, EmailPasswordComponent],
+  declarations: [ConfirmModalComponent, EmailPasswordComponent, AlertComponent],
   imports: [CommonModule, HttpClientModule, ReactiveFormsModule],
-  exports: [EmailPasswordComponent, CommonModule, FormsModule],
+  exports: [EmailPasswordComponent, CommonModule, FormsModule, AlertComponent],
   providers: [ConfirmModalComponent, BsModalService],
 })
 export class SharedModule {}

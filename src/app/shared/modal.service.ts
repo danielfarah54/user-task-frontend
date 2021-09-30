@@ -1,6 +1,7 @@
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Injectable } from '@angular/core';
 
+import { AlertComponent } from './alert.component';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 
 @Injectable({
@@ -8,6 +9,13 @@ import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 })
 export class ModalService {
   constructor(private bsModalService: BsModalService) {}
+
+  showAlert() {
+    const bsModalRef: BsModalRef = this.bsModalService.show(
+      AlertComponent
+    );
+    bsModalRef.content.title = "title";
+  }
 
   showConfirm(
     title: string,
