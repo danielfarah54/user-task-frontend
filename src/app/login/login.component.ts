@@ -2,7 +2,6 @@ import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { ModalService } from './../shared/modal.service';
 import { FormsService } from '../shared/forms.service';
 import { UserRepositoryService } from './../shared/user-repository.service';
 
@@ -20,7 +19,6 @@ export class LoginComponent implements OnInit {
     private repositoryService: UserRepositoryService,
     private formsService: FormsService,
     private router: Router,
-    private modalService: ModalService
   ) {}
 
   ngOnInit(): void {
@@ -43,13 +41,10 @@ export class LoginComponent implements OnInit {
     const { login } = valueSubmit;
     const { email, password } = login;
 
-    this.alert()
     this.repositoryService.login(email, password);
   }
 
-  alert() {
-    this.modalService.showAlert()
-  }
+
 
   onCreate() {
     this.router.navigate(['create']);

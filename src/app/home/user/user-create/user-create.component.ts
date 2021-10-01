@@ -44,7 +44,6 @@ export class UserCreateComponent implements OnInit {
     const { email, password } = login;
 
     this.repositoryService.createUser(name, email, password);
-    this.router.navigate(['login']);
   }
 
   onCancel() {

@@ -1,7 +1,8 @@
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Injectable } from '@angular/core';
 
-import { AlertComponent } from './alert.component';
+import { AlertSuccessComponent } from './alert/alert-success.component';
+import { AlertDangerComponent } from './alert/alert-danger.component';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 
 @Injectable({
@@ -10,11 +11,12 @@ import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 export class ModalService {
   constructor(private bsModalService: BsModalService) {}
 
-  showAlert() {
-    const bsModalRef: BsModalRef = this.bsModalService.show(
-      AlertComponent
-    );
-    bsModalRef.content.title = "title";
+  showAlertDanger() {
+    this.bsModalService.show(AlertDangerComponent);
+  }
+
+  showAlertSuccess() {
+    this.bsModalService.show(AlertSuccessComponent);
   }
 
   showConfirm(

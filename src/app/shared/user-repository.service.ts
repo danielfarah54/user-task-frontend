@@ -1,6 +1,7 @@
+import { ModalService } from './modal.service';
 import { Router } from '@angular/router';
 import { gql, Apollo } from 'apollo-angular';
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { EMPTY } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
@@ -19,12 +20,11 @@ import { AuthService } from '../auth/auth.service';
   providedIn: 'root',
 })
 export class UserRepositoryService {
-  listEmitter = new EventEmitter<boolean>();
-
   constructor(
     private apollo: Apollo,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private modalService: ModalService
   ) {}
 
   login(email: string, password: string) {
@@ -60,7 +60,7 @@ export class UserRepositoryService {
           })
         ),
         map(() => {
-          window.location.replace('home')
+          window.location.replace('home');
         })
       )
       .subscribe();
@@ -86,9 +86,13 @@ export class UserRepositoryService {
         map((result) => result.data?.registerUser),
         catchError((err) => {
           console.error(`DEU RUIM: ${err}`);
+          this.modalService.showAlertDanger();
           return EMPTY;
         }),
-        map(() => this.listEmitter.emit(true))
+        map(() => {
+          this.modalService.showAlertSuccess();
+          this.router.navigate(['login']);
+        })
       )
       .subscribe();
   }
