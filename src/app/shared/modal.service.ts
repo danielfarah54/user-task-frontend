@@ -11,19 +11,16 @@ export class ModalService {
   constructor(private bsModalService: BsModalService) {}
 
   showAlertDanger() {
-    const bsModalRef: BsModalRef =
-      this.bsModalService.show(AlertComponent);
-    bsModalRef.content.classAlert = 'danger'
-    bsModalRef.content.title = 'Holy guacamole!'
-    bsModalRef.content.body = ' You should check in on some of those fields below.'
+    const bsModalRef: BsModalRef = this.bsModalService.show(AlertComponent);
+    bsModalRef.content.type = 'danger';
+    bsModalRef.content.message =
+      'Holy guacamole! You should check in on some of those fields below.';
   }
 
   showAlertSuccess() {
-    const bsModalRef: BsModalRef =
-      this.bsModalService.show(AlertComponent);
-    bsModalRef.content.classAlert = 'success'
-    bsModalRef.content.title = `You're fine.`
-    bsModalRef.content.body = ' Go ahead kid.'
+    const bsModalRef: BsModalRef = this.bsModalService.show(AlertComponent);
+    bsModalRef.content.type = 'success';
+    bsModalRef.content.message = `You're fine. Go ahead kid.`;
   }
 
   showConfirm(
