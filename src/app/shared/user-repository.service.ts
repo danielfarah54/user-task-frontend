@@ -50,6 +50,7 @@ export class UserRepositoryService {
         map((result) => <Token>result.data?.login),
         catchError((err) => {
           console.error(`DEU RUIM: ${err}`);
+          this.modalService.showAlertDanger();
           return EMPTY;
         }),
         map((token: Token) =>
@@ -132,6 +133,7 @@ export class UserRepositoryService {
         map((result) => result.data?.updateUser),
         catchError((err) => {
           console.error(`DEU RUIM: ${err}`);
+          this.modalService.showAlertDanger();
           return EMPTY;
         })
       )
@@ -153,6 +155,7 @@ export class UserRepositoryService {
         map((result) => result.data?.deleteUser),
         catchError((err) => {
           console.error(`DEU RUIM: ${err}`);
+          this.modalService.showAlertDanger();
           return EMPTY;
         }),
         switchMap(() => this.router.navigate(['home/logout']))
@@ -175,6 +178,7 @@ export class UserRepositoryService {
         map((result) => result.data?.revokeRefreshTokensForUser),
         catchError((err) => {
           console.error(`DEU RUIM: ${err}`);
+          this.modalService.showAlertDanger();
           return EMPTY;
         })
       )

@@ -1,3 +1,4 @@
+import { ModalService } from './modal.service';
 import { Apollo, gql } from 'apollo-angular';
 import { catchError, map } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
@@ -18,7 +19,7 @@ import {
 export class TaskRepositoryService {
   listEmitter = new EventEmitter<boolean>();
 
-  constructor(private apollo: Apollo) {}
+  constructor(private apollo: Apollo, private modalService: ModalService) {}
 
   createTask(name: string, description: string) {
     const mutationString = gql`
@@ -38,6 +39,7 @@ export class TaskRepositoryService {
         map((result) => result.data?.registerTask),
         catchError((err) => {
           console.error(`DEU RUIM: ${err}`);
+          this.modalService.showAlertDanger();
           return EMPTY;
         }),
         map(() => this.listEmitter.emit(true))
@@ -108,6 +110,7 @@ export class TaskRepositoryService {
         map((result) => result.data?.updateTask),
         catchError((err) => {
           console.error(`DEU RUIM: ${err}`);
+          this.modalService.showAlertDanger();
           return EMPTY;
         }),
         map(() => this.listEmitter.emit(true))
@@ -133,6 +136,7 @@ export class TaskRepositoryService {
         map((result) => result.data?.deleteTask),
         catchError((err) => {
           console.error(`DEU RUIM: ${err}`);
+          this.modalService.showAlertDanger();
           return EMPTY;
         }),
         map(() => this.listEmitter.emit(true))
@@ -158,6 +162,7 @@ export class TaskRepositoryService {
         map((result) => result.data?.checkTask),
         catchError((err) => {
           console.error(`DEU RUIM: ${err}`);
+          this.modalService.showAlertDanger();
           return EMPTY;
         }),
         map(() => this.listEmitter.emit(true))
