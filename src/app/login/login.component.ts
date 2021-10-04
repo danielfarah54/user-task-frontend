@@ -44,8 +44,6 @@ export class LoginComponent implements OnInit {
     this.repositoryService.login(email, password);
   }
 
-
-
   onCreate() {
     this.router.navigate(['create']);
   }
